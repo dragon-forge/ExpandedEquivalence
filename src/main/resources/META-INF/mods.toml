@@ -1,0 +1,43 @@
+modLoader = "javafml"
+loaderVersion = "[43,)"
+issueTrackerURL = "https://github.com/dragon-forge/ExpandedEquivalence/issues"
+license = "All rights reserved"
+[[mods]]
+modId = "expequiv"
+version = "${file.jarVersion}"
+displayName = "Expanded Equivalence"
+updateJSONURL = "https://h.zeith.org/api/fmluc/295222"
+displayURL = "https://h.zeith.org/api/fmlhp/295222"
+credits = "None" #optional
+authors = "Zeitheron" #optional
+description = '''
+Provides support for EMC from ProjectE to a few mods out there
+'''
+
+[[dependencies.expequiv]]
+modId = "forge"
+mandatory = true
+versionRange = "[43,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.expequiv]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.2,1.19.3)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.expequiv]]
+modId = "hammerlib"
+mandatory = true
+versionRange = "[19.3.45,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.expequiv]]
+modId = "projecte"
+mandatory = true
+versionRange = "[1.0.1B,)"
+ordering = "AFTER"
+side = "BOTH"
