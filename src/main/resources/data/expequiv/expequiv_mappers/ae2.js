@@ -1,4 +1,4 @@
-// #require isModLoaded("ae2");
+#require isModLoaded("ae2");
 
 function setupData() {
     // Data.setup("key", value /*anything*/);
@@ -27,7 +27,6 @@ function addMappers(mappers) {
 
     var defRecipeMapper = Recipes.mapItems();
 
-    var ctx = mappers.context();
     Recipes.mapRecipeType("ae2:charger", function (recipe, output, inputs) {
         mappers.map(output,
             Ingredients.decode(recipe.getIngredient()),
