@@ -92,12 +92,12 @@ public interface IEMCRegistrar
 	
 	//
 	
-	default void multiMap(List<CountedIngredient> output, Collection<CountedIngredient> ingredients)
+	default void multiMap(Collection<CountedIngredient> output, Collection<CountedIngredient> ingredients)
 	{
 		if(output.isEmpty()) return;
 		if(output.size() == 1)
 		{
-			CountedIngredient out = output.get(0);
+			CountedIngredient out = output.iterator().next();
 			map(out, ingredients);
 			return;
 		}

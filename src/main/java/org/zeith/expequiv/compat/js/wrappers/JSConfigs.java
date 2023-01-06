@@ -1,8 +1,10 @@
 package org.zeith.expequiv.compat.js.wrappers;
 
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import org.zeith.expequiv.api.emc.IContextEMC;
+import org.zeith.expequiv.compat.js.ExpansionJS;
 import org.zeith.hammerlib.util.configured.ConfigFile;
 import org.zeith.hammerlib.util.configured.ConfiguredLib;
 import org.zeith.hammerlib.util.configured.data.IntValueRange;
@@ -11,16 +13,24 @@ public class JSConfigs
 {
 	protected final ConfigFile config;
 	protected final IContextEMC context;
+	protected final ExpansionJS exp;
 	
-	public JSConfigs(ConfigFile config, IContextEMC context)
+	public JSConfigs(ConfigFile config, IContextEMC context, ExpansionJS exp)
 	{
 		this.config = config;
 		this.context = context;
+		this.exp = exp;
 	}
 	
 	public void addEMC(ItemLike item, String configKey, long EMC)
 	{
-		context.registrar().register(new ItemStack(item), getCfgEMC(EMC, configKey));
+		ItemStack res;
+		if(item == null || item == Items.AIR || (res = new ItemStack(item)).isEmpty())
+		{
+			exp.log.warn("Tried to map EMC to non-existent item: " + configKey);
+			return;
+		}
+		context.registrar().register(res, getCfgEMC(EMC, configKey));
 	}
 	
 	public long getCfgEMC(long base, String id)

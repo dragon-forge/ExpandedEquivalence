@@ -25,21 +25,21 @@ function addMappers(mappers) {
 
     var qes = getItem("ae2", "quantum_entangled_singularity");
 
-    var defRecipeMapper = Recipes.mapItems();
+    var defRecipeMapper = Recipe.mapItems();
 
-    Recipes.mapRecipeType("ae2:charger", function (recipe, output, inputs) {
+    Recipe.mapRecipeType("ae2:charger", function (recipe, output, inputs) {
         mappers.map(output,
-            Ingredients.decode(recipe.getIngredient()),
-            Ingredients.forgeEnergy(1600)
+            Ingredient.decode(recipe.getIngredient()),
+            Ingredient.forgeEnergy(1600)
         );
     });
 
-    Recipes.mapRecipeType("ae2:transform", function (recipe, output, inputs) {
-        if(ItemStack.getItem(output) == qes) return; // Skip quantum entangled singularity
+    Recipe.mapRecipeType("ae2:transform", function (recipe, output, inputs) {
+        if (ItemStack.getItem(output) == qes) return; // Skip quantum entangled singularity
         defRecipeMapper.accept(recipe, output, inputs);
     });
 
-    Recipes.mapRecipeType("ae2:inscriber", function (recipe, output, inputs) {
+    Recipe.mapRecipeType("ae2:inscriber", function (recipe, output, inputs) {
         inputs.removeIf(function (item) {
             for (var i in presses)
                 if (item.test(presses[i]))

@@ -13,7 +13,7 @@ import org.zeith.hammerlib.util.configured.ConfigFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.function.Function;
 
 import static org.zeith.expequiv.ExpandedEquivalence.MOD_ID;
@@ -46,10 +46,15 @@ public class ExpandedEquivalence
 		return new ResourceLocation(MOD_ID, path);
 	}
 	
+	public static Path getModCfgPath()
+	{
+		return FMLPaths.CONFIGDIR.get()
+				.resolve("ExpandedEquivalence");
+	}
+	
 	public static ConfigFile openExpansionConfig(ResourceLocation path) throws IOException
 	{
-		var pth = FMLPaths.CONFIGDIR.get()
-				.resolve("ExpandedEquivalence")
+		var pth = getModCfgPath()
 				.resolve("built-in expansions")
 				.resolve(path.getNamespace())
 				.resolve(path.getPath() + ".cfg")

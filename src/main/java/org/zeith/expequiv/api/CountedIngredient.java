@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fluids.FluidStack;
 import org.zeith.expequiv.api.emc.FakeItem;
 import org.zeith.expequiv.api.emc.IContextEMC;
-import org.zeith.expequiv.compat.js.wrappers.JSLists;
 import org.zeith.hammerlib.api.crafting.*;
 import org.zeith.hammerlib.api.energy.EnergyUnit;
 import org.zeith.hammerlib.util.charging.fe.FECharge;
@@ -41,6 +40,16 @@ public class CountedIngredient
 		return ingredient;
 	}
 	
+	public CountedIngredient withCount(int count)
+	{
+		return new CountedIngredient(count, ingredient);
+	}
+	
+	public CountedIngredient grow(int amount)
+	{
+		return new CountedIngredient(this.count + amount, ingredient);
+	}
+	
 	public CountedIngredient stack(int amount)
 	{
 		return new CountedIngredient(this.count * amount, ingredient);
@@ -57,7 +66,7 @@ public class CountedIngredient
 			Map<Potion, Long> costs = (Map<Potion, Long>) ctx.data().get("minecraft:potion_type_costs");
 			if(costs != null && costs.containsKey(type))
 			{
-				List<CountedIngredient> ci = JSLists.arrayList();
+				List<CountedIngredient> ci = new ArrayList<>();
 				
 				long potCost = costs.getOrDefault(type, 0L);
 				if(potCost > 0) ci.add(ctx.forEMC(potCost).stack(1));
@@ -193,5 +202,10 @@ public class CountedIngredient
 				"count=" + count +
 				", ingredient=" + ingredient +
 				'}';
+	}
+	
+	public boolean isEmpty()
+	{
+		return ingredient == null || count < 1;
 	}
 }

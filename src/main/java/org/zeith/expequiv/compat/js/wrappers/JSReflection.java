@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 
 public class JSReflection
 {
-	public static Object getField(Object source, String name)
+	public Object getField(Object source, String name)
 	{
 		if(source instanceof Class)
 		{
