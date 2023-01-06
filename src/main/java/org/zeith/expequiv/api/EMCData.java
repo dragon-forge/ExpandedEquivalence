@@ -21,4 +21,12 @@ public class EMCData
 	{
 		return map.get(key);
 	}
+	
+	public void mergeTo(EMCData other)
+	{
+		for(var e : map.entrySet())
+		{
+			other.set(e.getKey(), e.getValue());
+		}
+	}
 }

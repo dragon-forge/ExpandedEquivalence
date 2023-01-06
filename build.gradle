@@ -222,6 +222,31 @@ curseforge {
         }
         relations {
             requiredDependency 'Hammer-Lib'
+            requiredDependency 'ProjectE'
+
+            optionalDependency 'Thermal-Expansion'
+            optionalDependency 'Thermal-Foundation'
+//            optionalDependency 'Actually-Additions'
+            optionalDependency 'Applied-Energistics-2'
+//            optionalDependency 'Astral-Sorcery'
+//            optionalDependency 'Avaritia-1-10'
+            optionalDependency 'Botania'
+//            optionalDependency 'Buildcraft'
+//            optionalDependency 'Compact-Machines'
+//            optionalDependency 'Draconic-Evolution'
+//            optionalDependency 'Embers'
+//            optionalDependency 'Forestry'
+//            optionalDependency 'Immersive-Engineering'
+//            optionalDependency 'Industrial-Craft'
+//            optionalDependency 'Mystical-Agriculture'
+//            optionalDependency 'Thaumcraft'
+//            optionalDependency 'Base-Metals'
+//            optionalDependency 'Ender-IO'
+//            optionalDependency 'TechReborn'
+//            optionalDependency 'RebornCore'
+//            optionalDependency 'Calculator'
+//            optionalDependency 'Extended-Crafting'
+//            optionalDependency 'Blood-Magic'
         }
     }
 }

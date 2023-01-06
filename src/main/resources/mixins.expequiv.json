@@ -1,14 +1,16 @@
 {
-	"required": true,
-	"minVersion": "0.8.5",
-	"package": "org.zeith.expequiv.mixins",
-	"refmap": "mixins.expequiv.refmap.json",
-	"target": "@env(DEFAULT)",
-	"compatibilityLevel": "JAVA_17",
-	"mixins": [
-	],
-	"client": [
-	],
-	"server": [
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "org.zeith.expequiv.mixins",
+  "refmap": "mixins.expequiv.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "CustomConversionMapperMixin",
+    "EMCMappingHandlerMixin"
+  ],
+  "client": [
+  ],
+  "server": [
 	]
 }

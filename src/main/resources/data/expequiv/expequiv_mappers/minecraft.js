@@ -10,6 +10,7 @@ function addMappers(mappers) {
     var powderFromRod = parseInt(Data.get("minecraft:max_blaze_powders_from_rod"));
     var blazePowder = ItemStack.create(getItem("blaze_powder"));
 
+    // This does nothing....
     mappers.map(blazeRod, Ingredient.decode(blazePowder).stack(powderFromRod));
-    //mappers.map(blazePowder, powderFromRod, Ingredient.decode(blazeRod));
+    mappers.map(blazePowder, powderFromRod, Ingredient.decode(blazeRod));
 }

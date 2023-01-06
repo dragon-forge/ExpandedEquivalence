@@ -131,7 +131,7 @@ public class CountedIngredient
 		if(x instanceof ItemStack s)
 			return create(ctx, s);
 		
-		if(x instanceof Item i)
+		if(x instanceof Item i && i != Items.AIR)
 			return create(i, 1);
 		
 		if(x instanceof Block b)

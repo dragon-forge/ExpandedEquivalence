@@ -14,7 +14,7 @@ import net.minecraftforge.common.MinecraftForge;
 import org.zeith.expequiv.api.CountedIngredient;
 import org.zeith.expequiv.api.emc.*;
 import org.zeith.expequiv.api.event.GatherEMCEvent;
-import org.zeith.expequiv.compat.js.ExpansionJS;
+import org.zeith.expequiv.js.ScriptSystem;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -22,6 +22,18 @@ import java.util.concurrent.atomic.AtomicReference;
 public class PEMapper
 		implements IEMCMapper<NormalizedSimpleStack, Long>
 {
+	private static PEMapper INSTANCE;
+	
+	public PEMapper()
+	{
+		INSTANCE = this;
+	}
+	
+	public static PEMapper getInstance()
+	{
+		return INSTANCE;
+	}
+	
 	@Override
 	public String getName()
 	{
@@ -40,10 +52,31 @@ public class PEMapper
 		AtomicReference<GatherEMCEvent> ref = new AtomicReference<>();
 		IEMCRegistrar registrar = new IEMCRegistrar()
 		{
+			int forceStack = 0;
+			
+			@Override
+			public void pushForcefulMapping()
+			{
+				++forceStack;
+			}
+			
 			@Override
 			public IContextEMC context()
 			{
 				return ref.get();
+			}
+			
+			@Override
+			public void popForcefulMapping()
+			{
+				if(forceStack > 0)
+					--forceStack;
+			}
+			
+			@Override
+			public boolean isMappingForcefully()
+			{
+				return forceStack > 0;
 			}
 			
 			@Override
@@ -70,7 +103,12 @@ public class PEMapper
 					}
 				
 				if(out.getIngredient() != null && out.getCount() > 0 && !ingredients.isEmpty())
-					collector.addConversion(out.getCount(), out.getIngredient(), ingredients);
+				{
+					if(isMappingForcefully())
+						collector.setValueFromConversion(out.getCount(), out.getIngredient(), ingredients);
+					else
+						collector.addConversion(out.getCount(), out.getIngredient(), ingredients);
+				}
 			}
 			
 			@Override
@@ -88,6 +126,19 @@ public class PEMapper
 		ref.set(new GatherEMCEvent(registrar));
 		MinecraftForge.EVENT_BUS.post(ref.get());
 		
-		ExpansionJS.loadFromResources(ref.get(), resources, manager);
+		if(scriptSystem == null) newScriptSystem(new ScriptSystem(resources, manager));
+		scriptSystem.applyContextAndExecute(ref.get());
+	}
+	
+	protected ScriptSystem scriptSystem;
+	
+	public ScriptSystem getScriptSystem()
+	{
+		return scriptSystem;
+	}
+	
+	public void newScriptSystem(ScriptSystem scriptSystem)
+	{
+		this.scriptSystem = scriptSystem;
 	}
 }

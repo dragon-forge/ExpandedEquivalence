@@ -15,7 +15,13 @@ public interface IEMCRegistrar
 {
 	IContextEMC context();
 	
+	void pushForcefulMapping();
+	
+	boolean isMappingForcefully();
+	
 	void map(CountedIngredient output, CountedIngredient... ingredients);
+	
+	void popForcefulMapping();
 	
 	// Default methods:
 	
