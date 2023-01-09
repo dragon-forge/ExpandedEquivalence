@@ -2,6 +2,7 @@ package org.zeith.expequiv.js;
 
 import net.minecraftforge.fml.ModList;
 import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
+import org.zeith.expequiv.ExpandedEquivalence;
 
 import javax.script.*;
 import java.util.Objects;
@@ -46,7 +47,7 @@ public class JSEngine
 	
 	public static ScriptEngine newEngine(ExtraJSContext jsctx)
 	{
-		ScriptEngine se = NASHORN_FACTORY.getScriptEngine();
+		ScriptEngine se = NASHORN_FACTORY.getScriptEngine(ExpandedEquivalence.class.getClassLoader());
 		
 		Predicate<String> isModLoaded = ModList.get()::isLoaded;
 		se.put("isModLoaded", isModLoaded);

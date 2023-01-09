@@ -3,6 +3,7 @@ package org.zeith.expequiv.js.wrappers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.fluids.FluidStack;
 import org.zeith.expequiv.api.emc.IContextEMC;
 import org.zeith.expequiv.js.ExpansionJS;
 import org.zeith.hammerlib.util.configured.ConfigFile;
@@ -31,6 +32,16 @@ public class JSConfigs
 			return;
 		}
 		context.registrar().register(res, getCfgEMC(EMC, configKey));
+	}
+	
+	public void addEMC(FluidStack fluid, String configKey, long EMC)
+	{
+		if(fluid == null || fluid.isEmpty())
+		{
+			exp.log.warn("Tried to map EMC to non-existent FluidStack: " + configKey);
+			return;
+		}
+		context.registrar().register(fluid, getCfgEMC(EMC, configKey));
 	}
 	
 	public long getCfgEMC(long base, String id)

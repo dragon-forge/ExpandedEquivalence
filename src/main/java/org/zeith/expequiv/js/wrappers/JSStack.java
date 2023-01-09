@@ -2,6 +2,7 @@ package org.zeith.expequiv.js.wrappers;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -10,8 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.zeith.expequiv.api.CountedIngredient;
 import org.zeith.expequiv.api.emc.IContextEMC;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class JSStack
@@ -92,6 +92,16 @@ public class JSStack
 	public CountedIngredient toIngredientIf(ItemStack[] stacks, Predicate<ItemStack> stack)
 	{
 		return CountedIngredient.tryCreate(ctx, Ingredient.of(Arrays.stream(stacks).filter(stack)));
+	}
+	
+	public boolean isEdible(ItemStack s)
+	{
+		return s.isEdible();
+	}
+	
+	public int getNutrition(ItemStack s)
+	{
+		return Optional.ofNullable(s.getFoodProperties(null)).map(FoodProperties::getNutrition).orElse(0);
 	}
 	
 	public ItemStack create(ItemLike item)

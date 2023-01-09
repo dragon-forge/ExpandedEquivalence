@@ -39,9 +39,13 @@ public record JSSource(ResourceLocation path, Set<String> conditions, String par
 			
 			String trimmedLn = ln.stripLeading();
 			
+			final int hashTagLen = 1;
+			if(trimmedLn.startsWith("//#"))
+				trimmedLn = trimmedLn.substring(2);
+			
 			if(trimmedLn.startsWith("#require "))
 			{
-				String kv = ln.substring(9);
+				String kv = trimmedLn.substring(8 + hashTagLen);
 				while(kv.endsWith(";")) kv = kv.substring(0, kv.length() - 1);
 				conditions.add(kv);
 				ln = "// Processed: " + ln;
@@ -49,17 +53,18 @@ public record JSSource(ResourceLocation path, Set<String> conditions, String par
 			
 			if(trimmedLn.startsWith("#define "))
 			{
-				String[] kv = ln.substring(8).split(" ", 2);
+				String[] kv = trimmedLn.substring(7 + hashTagLen).split(" ", 2);
 				if(kv.length == 2) defines.put(kv[0], kv[1]);
 				ln = "// Processed: " + ln;
 			}
 			
 			if(trimmedLn.startsWith("#import "))
 			{
-				String c = ln.substring(8);
+				String c = trimmedLn.substring(7 + hashTagLen);
 				while(c.endsWith(";")) c = c.substring(0, c.length() - 1);
 				ln = "var " + c.substring(c.lastIndexOf('.') + 1) + " = Java.type(\"" + c + "\");";
 			}
+			
 			content.append(ln).append(System.lineSeparator());
 		});
 		

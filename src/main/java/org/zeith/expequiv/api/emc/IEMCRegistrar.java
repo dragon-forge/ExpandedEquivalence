@@ -1,6 +1,7 @@
 package org.zeith.expequiv.api.emc;
 
 import moze_intel.projecte.api.imc.CustomEMCRegistration;
+import moze_intel.projecte.api.nss.NSSFluid;
 import moze_intel.projecte.api.nss.NSSItem;
 import moze_intel.projecte.emc.mappers.APICustomEMCMapper;
 import net.minecraft.world.item.ItemStack;
@@ -9,7 +10,6 @@ import org.zeith.expequiv.ExpandedEquivalence;
 import org.zeith.expequiv.api.CountedIngredient;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface IEMCRegistrar
 {
@@ -135,6 +135,13 @@ public interface IEMCRegistrar
 	{
 		APICustomEMCMapper.INSTANCE.registerCustomEMC(ExpandedEquivalence.MOD_ID,
 				new CustomEMCRegistration(item.getHolder(), emc)
+		);
+	}
+	
+	default void register(FluidStack item, long emc)
+	{
+		APICustomEMCMapper.INSTANCE.registerCustomEMC(ExpandedEquivalence.MOD_ID,
+				new CustomEMCRegistration(NSSFluid.createFluid(item), emc)
 		);
 	}
 	

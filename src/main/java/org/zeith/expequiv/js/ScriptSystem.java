@@ -4,6 +4,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.ReloadableServerResources;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.zeith.expequiv.ExpandedEquivalence;
 import org.zeith.expequiv.api.emc.IContextEMC;
@@ -38,7 +40,7 @@ public class ScriptSystem
 							return false;
 						} catch(Exception err)
 						{
-							ExpandedEquivalence.LOG.fatal("Expansion " + e.getKey() + " has failed to setup it's data. Skipping", err);
+							ExpandedEquivalence.LOG.fatal("Expansion " + e.getKey() + " has failed to setup its data. Skipping", err);
 							BreakpointOnException.breakpoint(err);
 						}
 						return true;
@@ -52,7 +54,7 @@ public class ScriptSystem
 							return false;
 						} catch(Exception err)
 						{
-							ExpandedEquivalence.LOG.fatal("Expansion " + e.getKey() + " has failed to tweak it's data. Skipping", err);
+							ExpandedEquivalence.LOG.fatal("Expansion " + e.getKey() + " has failed to tweak its data. Skipping", err);
 							BreakpointOnException.breakpoint(err);
 						}
 						return true;
@@ -63,10 +65,38 @@ public class ScriptSystem
 	}
 	
 	protected List<ISubTagFilter> subTagFilters;
+	protected Map<TagKey<Item>, Set<Item>> addedToTags;
 	
 	public void preload()
 	{
 		subTagFilters = null;
+	}
+	
+	public Map<TagKey<Item>, Set<Item>> setupTags()
+	{
+		if(addedToTags != null) return addedToTags;
+		
+		addedToTags = new HashMap<>();
+		
+		ExpandedEquivalence.LOG.info("Gathering extra item tag content.");
+		long now = System.currentTimeMillis();
+		
+		expansions.join().entrySet().removeIf(e ->
+		{
+			try
+			{
+				e.getValue().populateTags(addedToTags);
+				return false;
+			} catch(Exception err)
+			{
+				ExpandedEquivalence.LOG.fatal("Expansion " + e.getKey() + " has failed to gather its extra item tags. Skipping", err);
+				BreakpointOnException.breakpoint(err);
+			}
+			return true;
+		});
+		
+		ExpandedEquivalence.LOG.info("Built-in extra item tags gathered in " + (System.currentTimeMillis() - now) + " ms.");
+		return addedToTags;
 	}
 	
 	public List<ISubTagFilter> gatherBlockers()
@@ -89,7 +119,7 @@ public class ScriptSystem
 				return false;
 			} catch(Exception err)
 			{
-				ExpandedEquivalence.LOG.fatal("Expansion " + e.getKey() + " has failed to gather it's sub-tag blockers. Skipping", err);
+				ExpandedEquivalence.LOG.fatal("Expansion " + e.getKey() + " has failed to gather its sub-tag blockers. Skipping", err);
 				BreakpointOnException.breakpoint(err);
 			}
 			return true;
@@ -116,7 +146,7 @@ public class ScriptSystem
 				return false;
 			} catch(Exception err)
 			{
-				ExpandedEquivalence.LOG.fatal("Expansion " + e.getKey() + " has failed to register it's EMC. Skipping", err);
+				ExpandedEquivalence.LOG.fatal("Expansion " + e.getKey() + " has failed to register its EMC. Skipping", err);
 				BreakpointOnException.breakpoint(err);
 			}
 			return true;
@@ -130,7 +160,7 @@ public class ScriptSystem
 				return false;
 			} catch(Exception err)
 			{
-				ExpandedEquivalence.LOG.fatal("Expansion " + e.getKey() + " has failed to add it's mappers. Skipping", err);
+				ExpandedEquivalence.LOG.fatal("Expansion " + e.getKey() + " has failed to add its mappers. Skipping", err);
 				BreakpointOnException.breakpoint(err);
 			}
 			return true;

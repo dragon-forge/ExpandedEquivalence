@@ -1,6 +1,8 @@
 package org.zeith.expequiv;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -33,6 +35,12 @@ public class ExpandedEquivalence
 		
 		var bus = FMLJavaModLoadingContext.get().getModEventBus();
 		bus.addListener(this::checkFingerprint);
+		
+		MinecraftForge.EVENT_BUS.addListener(this::serverAboutToStart);
+	}
+	
+	public void serverAboutToStart(ServerAboutToStartEvent e)
+	{
 	}
 	
 	private void checkFingerprint(FMLFingerprintCheckEvent e)
