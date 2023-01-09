@@ -114,7 +114,7 @@ public interface IEMCRegistrar
 		FakeItem obj = new FakeItem();
 		map(obj, total, ingredients);
 		
-		for(CountedIngredient o : output) map(o, obj.stack(o.getCount()));
+		for(CountedIngredient o : output) if(o != null) map(o, obj.stack(o.getCount()));
 	}
 	
 	//

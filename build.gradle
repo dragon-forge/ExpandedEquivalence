@@ -226,6 +226,7 @@ curseforge {
 
             optionalDependency 'Thermal-Expansion'
             optionalDependency 'Thermal-Foundation'
+            optionalDependency 'IC2-Classic'
 //            optionalDependency 'Actually-Additions'
             optionalDependency 'Applied-Energistics-2'
 //            optionalDependency 'Astral-Sorcery'

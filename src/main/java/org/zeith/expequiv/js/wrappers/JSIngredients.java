@@ -1,5 +1,8 @@
 package org.zeith.expequiv.js.wrappers;
 
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import org.zeith.expequiv.api.CountedIngredient;
 import org.zeith.expequiv.api.emc.IContextEMC;
 import org.zeith.hammerlib.api.energy.EnergyUnit;
@@ -21,6 +24,11 @@ public class JSIngredients
 		return CountedIngredient.tryCreate(context, i);
 	}
 	
+	public CountedIngredient decode1(Object i)
+	{
+		return CountedIngredient.tryCreate(context, i);
+	}
+	
 	public CountedIngredient[] decode(Object... i)
 	{
 		return Arrays.stream(i).map(this::decode).toArray(CountedIngredient[]::new);
@@ -37,5 +45,17 @@ public class JSIngredients
 	public CountedIngredient forgeEnergy(long fe)
 	{
 		return context.forEMC(Math.round(EnergyUnit.FE.convertTo(fe, EnergyUnit.EMC))).stack(1);
+	}
+	
+	public boolean testById(Ingredient ingr, ItemStack item)
+	{
+		if(ingr.isEmpty()) return item.isEmpty();
+		if(item.isEmpty()) return false;
+		return testById(ingr, item.getItem());
+	}
+	
+	public boolean testById(Ingredient ingr, ItemLike item)
+	{
+		return Arrays.stream(ingr.getItems()).map(ItemStack::getItem).anyMatch(item.asItem()::equals);
 	}
 }

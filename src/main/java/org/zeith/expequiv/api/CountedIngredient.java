@@ -159,8 +159,8 @@ public class CountedIngredient
 		if(x instanceof TagKey<?> tag)
 			return create((TagKey<Item>) tag, 1);
 		
-		if(x instanceof FluidStack)
-			return create((FluidStack) x);
+		if(x instanceof FluidStack fs)
+			return create(fs);
 		
 		if(x instanceof FECharge charge)
 		{
