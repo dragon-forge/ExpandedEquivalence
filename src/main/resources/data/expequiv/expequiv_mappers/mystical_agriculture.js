@@ -21,9 +21,9 @@ function addMappers(mappers) {
     ];
 
     Recipe.mapRecipeType("${mod}:infusion", function (recipe, output, inputs) {
-        inputs.removeIf(function(item) {
-            for(var i in soulJar)
-                if(Ingredient.testById(item, soulJar[i]))
+        inputs.removeIf(function (item) {
+            for (var i in soulJar)
+                if (Ingredient.testById(item, soulJar[i]))
                     return true;
             return false;
         });

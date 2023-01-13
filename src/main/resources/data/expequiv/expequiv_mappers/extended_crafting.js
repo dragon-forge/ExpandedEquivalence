@@ -11,7 +11,7 @@ function addMappers(mappers) {
         var items = List.arrayList();
         items.add(Ingredient.decode(recipe.getCatalyst()));
 
-        for(var i = 0; i < inputs.size(); ++i) {
+        for (var i = 0; i < inputs.size(); ++i) {
             items.add(Ingredient.decode(inputs.get(i)).stack(recipe.getInputCount()));
         }
 

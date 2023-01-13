@@ -3,6 +3,7 @@ package org.zeith.expequiv.js.wrappers;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.ReloadableServerResources;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -11,6 +12,7 @@ import org.zeith.expequiv.js.ExpansionJS;
 import org.zeith.hammerlib.util.java.Cast;
 import org.zeith.hammerlib.util.java.consumers.Consumer3;
 
+import java.util.List;
 import java.util.Objects;
 
 public class JSRecipes
@@ -43,8 +45,9 @@ public class JSRecipes
 		RecipeType<?> type = ForgeRegistries.RECIPE_TYPES.getValue(new ResourceLocation(id));
 		if(type != null)
 		{
-			exp.log.info("Mapping recipe type " + new ResourceLocation(id));
-			resources.getRecipeManager().getAllRecipesFor(Cast.cast(type))
+			List<Recipe<Container>> rs = resources.getRecipeManager().getAllRecipesFor(Cast.cast(type));
+			exp.log.info("Mapping " + rs.size() + " recipes of type " + new ResourceLocation(id));
+			rs
 					.forEach(r ->
 					{
 						var list = NonNullList.<Ingredient> create();

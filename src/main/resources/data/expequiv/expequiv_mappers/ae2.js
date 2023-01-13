@@ -1,4 +1,4 @@
-#require isModLoaded("ae2");
+//#require isModLoaded("ae2");
 
 function setupData() {
     // Data.setup("key", value /*anything*/);

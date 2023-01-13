@@ -1,9 +1,14 @@
 package org.zeith.expequiv.js.wrappers;
 
+import moze_intel.projecte.api.nss.NSSItem;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.fluids.FluidStack;
+import org.zeith.expequiv.api.emc.FakeItem;
 import org.zeith.expequiv.api.emc.IContextEMC;
 import org.zeith.expequiv.js.ExpansionJS;
 import org.zeith.hammerlib.util.configured.ConfigFile;
@@ -21,6 +26,12 @@ public class JSConfigs
 		this.config = config;
 		this.context = context;
 		this.exp = exp;
+	}
+	
+	public void addTagEMC(String tag, String configKey, long EMC)
+	{
+		if(tag.startsWith("#")) tag = tag.substring(1);
+		context.registrar().register(FakeItem.ofExisting(NSSItem.createTag(new ResourceLocation(tag))), getCfgEMC(EMC, configKey));
 	}
 	
 	public void addEMC(ItemLike item, String configKey, long EMC)

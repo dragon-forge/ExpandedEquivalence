@@ -1,4 +1,4 @@
-#define getItem( getItem("minecraft",
+//#define getItem( getItem("minecraft",
 
 function setupData() {
     Data.setup("minecraft:max_blaze_powders_from_rod", 2);

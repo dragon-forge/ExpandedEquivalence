@@ -18,8 +18,7 @@ function tweakData() {
     Data.set("minecraft:max_blaze_powders_from_rod", Math.max(5, Data.get("minecraft:max_blaze_powders_from_rod")));
 }
 
-function registerEMC(configs)
-{
+function registerEMC(configs) {
     configs.addEMC(getItem("ic2", "sticky_resin"), "StickyResin", 32);
     configs.addEMC(getItem("ic2", "coffee_beans"), "CoffeeBeans", 24);
     configs.addEMC(getItem("ic2", "uumatter"), "UuMatter", 8192 / 9);
@@ -51,7 +50,7 @@ function handleIC2Recipe(mappers, IC2RecipeEntry, inputItemFilter) {
     var minIterations = 1;
 
     var out = IC2RecipeEntry.getOutput();
-    if(out instanceof ChanceRecipeOutput) {  /* jdk.dynalink.beans.StaticClass.getRepresentedClass() converts to Java Class<?> */
+    if (out instanceof ChanceRecipeOutput) {  /* jdk.dynalink.beans.StaticClass.getRepresentedClass() converts to Java Class<?> */
         var chance = ReflectionUtil.lookupField(Class.forName("ic2.api.recipes.ingridients.recipes.ChanceRecipeOutput"), "chance").getFloat(out);
         minIterations = 1 / chance;
     }
@@ -66,13 +65,13 @@ function handleIC2Recipe(mappers, IC2RecipeEntry, inputItemFilter) {
 function mapMachineRecipes(mappers, recipeRegistry, type) {
     var re = recipeRegistry.getAllEntries();
     info("Handling " + re.size() + " IC2-Classic recipes for " + type);
-    for(var i = 0; i < re.size(); ++i) handleIC2Recipe(mappers, re.get(i));
+    for (var i = 0; i < re.size(); ++i) handleIC2Recipe(mappers, re.get(i));
 }
 
 function mapElectrolyzerRecipes(mappers, recipeList) {
     var re = recipeList.getRecipes();
     info("Handling " + re.size() + " IC2-Classic recipes for Electrolyzer");
-    for(var i = 0; i < re.size(); ++i) {
+    for (var i = 0; i < re.size(); ++i) {
         var r = re.get(i);
         mappers.map(Ingredient.decode(r.getOutput()), Ingredient.decode(r.getInput()));
     }
@@ -83,9 +82,9 @@ function mapRareEarthRecipes(mappers, recipeList) {
     info("Handling " + re.size() + " IC2-Classic recipes for Rare Earth Extractor");
 
     var rareEarth = getItem("ic2", "dust_rare_earth");
-    for(var i = 0; i < re.size(); ++i) {
+    for (var i = 0; i < re.size(); ++i) {
         var r = re.get(i);
-        if(ItemStack.getItem(r.getOutput()) != rareEarth) continue;
+        if (ItemStack.getItem(r.getOutput()) != rareEarth) continue;
         mappers.map(
             Ingredient.decode(r.getOutput()),
             Ingredient.decode(r.getInput()).stack(Math.ceil(1000.0 / r.getValue()))
@@ -97,16 +96,16 @@ function mapRefiningRecipes(mappers, recipeList) {
     var re = recipeList.getAllRecipes();
     info("Handling " + re.size() + " IC2-Classic recipes for Refinery");
 
-    for(var i = 0; i < re.size(); ++i) {
+    for (var i = 0; i < re.size(); ++i) {
         var r = re.get(i);
 
         var inputs = List.arrayList();
         var outputs = List.arrayList();
 
-        if(!FluidStack.isEmpty(r.getFirstTank()))
+        if (!FluidStack.isEmpty(r.getFirstTank()))
             inputs.add(Ingredient.decode(r.getFirstTank()));
 
-        if(!FluidStack.isEmpty(r.getSecondTank()))
+        if (!FluidStack.isEmpty(r.getSecondTank()))
             inputs.add(Ingredient.decode(r.getSecondTank()));
 
         var it = IInput(r.getItemInput(), 0);
@@ -124,8 +123,7 @@ function getFoodAmount(stack) {
     return ItemStack.isEdible(stack) ? Math.max(1, Math.ceil(ItemStack.getNutrition(stack) / 2.0)) : (ItemStack.getItem(stack) == getItem1("cake") ? 6 : 0);
 }
 
-function addMappers(mappers)
-{
+function addMappers(mappers) {
     var RecipesIC2 = IC2.RECIPES.get(true); // true is for "simulating" a.k.a. server side of things.
 
     mappers.map(
@@ -156,13 +154,13 @@ function addMappers(mappers)
 
     var foodCan = FoodCanRegistry.INSTANCE;
 
-    while(items.hasNext()) {
+    while (items.hasNext()) {
         var item = items.next();
         var stack = ItemStack.create(item);
 
-        if(item instanceof CellItem) {
+        if (item instanceof CellItem) {
             var fluidInCell = stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElse(null);
-            if(fluidInCell && fluidInCell.getFluid && !FluidStack.isEmpty(fluidInCell.getFluid())) {
+            if (fluidInCell && fluidInCell.getFluid && !FluidStack.isEmpty(fluidInCell.getFluid())) {
                 mappers.map(stack,
                     Ingredient.decode(fluidInCell.getFluid()),
                     Ingredient.decode(emptyCell)
@@ -172,9 +170,9 @@ function addMappers(mappers)
             }
         } else {
             var foodCanAmount = getFoodAmount(stack);
-            if(foodCanAmount > 0) {
+            if (foodCanAmount > 0) {
                 var fcItem = foodCan.getItemForFood(stack);
-                if(!fcItem) fcItem = getItem("ic2", "filled_tin_can");
+                if (!fcItem) fcItem = getItem("ic2", "filled_tin_can");
 
                 var output = ItemStack.create(fcItem, foodCanAmount);
 

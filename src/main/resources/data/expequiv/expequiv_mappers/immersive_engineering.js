@@ -14,38 +14,38 @@ function registerEMC(configs) {
 //#import blusunrize.immersiveengineering.api.crafting.IngredientWithSize;
 
 function decodeIngredientWithSize(ingr) {
-    if(ingr instanceof IngredientWithSize)
+    if (ingr instanceof IngredientWithSize)
         return Ingredient.decode(ingr.getBaseIngredient()).stack(ingr.getCount());
     return Ingredient.decode(ingr);
 }
 
 function decodeFluidTagInput(FluidTagInput) {
-    if(!FluidTagInput) return null;
+    if (!FluidTagInput) return null;
     return Ingredient.decode1(FluidTagInput.getMatchingFluidStacks()).stack(FluidTagInput.getAmount());
 }
 
 function mapMultiblockRecipe(mappers) {
-    return function(recipe, output, inputs) {
+    return function (recipe, output, inputs) {
         var outputs = List.arrayList();
         var inputs = List.arrayList();
 
         var tmp = recipe.getItemInputs();
-        for(var i = 0; tmp && i < tmp.size(); ++i) {
+        for (var i = 0; tmp && i < tmp.size(); ++i) {
             inputs.add(decodeIngredientWithSize(tmp.get(i)));
         }
 
         tmp = recipe.getFluidInputs();
-        for(var i = 0; tmp && i < tmp.size(); ++i) {
+        for (var i = 0; tmp && i < tmp.size(); ++i) {
             inputs.add(decodeFluidTagInput(tmp.get(i)));
         }
 
         tmp = recipe.getFluidOutputs();
-        for(var i = 0; tmp && i < tmp.size(); ++i) {
+        for (var i = 0; tmp && i < tmp.size(); ++i) {
             outputs.add(Ingredient.decode(tmp.get(i)));
         }
 
         tmp = recipe.getItemOutputs();
-        for(var i = 0; tmp && i < tmp.size(); ++i) {
+        for (var i = 0; tmp && i < tmp.size(); ++i) {
             outputs.add(Ingredient.decode(tmp.get(i)));
         }
 
@@ -54,7 +54,7 @@ function mapMultiblockRecipe(mappers) {
 }
 
 function input2OutputMapper(mappers) {
-    return function(recipe, output, inputs) {
+    return function (recipe, output, inputs) {
         var inputs = List.arrayList();
         inputs.add(decodeIngredientWithSize(recipe.input));
         mappers.map(Ingredient.decode(output), inputs);
@@ -94,10 +94,10 @@ function addMappers(mappers) {
         var outputs = List.arrayList();
         var inputs = List.arrayList();
 
-        if(!recipe.getItemInputs) return;
+        if (!recipe.getItemInputs) return;
 
         var tmp = recipe.getItemInputs();
-        for(var i = 0; tmp && i < tmp.size(); ++i) {
+        for (var i = 0; tmp && i < tmp.size(); ++i) {
             inputs.add(decodeIngredientWithSize(tmp.get(i)));
         }
         inputs.add(decodeFluidTagInput(recipe.fluidInput));
@@ -115,7 +115,7 @@ function addMappers(mappers) {
         var inputs = List.arrayList();
         inputs.add(decodeIngredientWithSize(recipe.input));
         outputs.add(Ingredient.decode(output));
-        if(!FluidStack.isEmpty(recipe.fluidOutput)) outputs.add(Ingredient.decode(recipe.fluidOutput));
+        if (!FluidStack.isEmpty(recipe.fluidOutput)) outputs.add(Ingredient.decode(recipe.fluidOutput));
         mappers.multiMap(outputs, inputs);
     };
 

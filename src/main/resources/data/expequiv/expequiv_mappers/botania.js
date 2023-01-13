@@ -1,14 +1,14 @@
-#define ${mod} botania
-#require isModLoaded("${mod}");
+//#define ${mod} botania
+//#require isModLoaded("${mod}");
 
-#define getItem( getItem("${mod}",
+//#define getItem( getItem("${mod}",
 
 function setupData() {
     Data.setup("botania:mana_per_emc", 10);
 }
 
 function gatherBlockers(sink) {
-    sink.add(function(item, emc, tag) {
+    sink.add(function (item, emc, tag) {
         // This makes sure to remove special flowers of Botania from default EMC value of 16.
         return (
             ItemStack.isInTag(getItem1(item), "botania:special_flowers")
@@ -17,8 +17,7 @@ function gatherBlockers(sink) {
     });
 }
 
-function registerEMC(configs)
-{
+function registerEMC(configs) {
     configs.addEMC(getItem("record_gaia_1"), "ScathedMusicDiscEndureEmptiness", 4096);
     configs.addEMC(getItem("record_gaia_2"), "ScathedMusicDiscFightForQuiescence", 4096);
     configs.addEMC(getItem("ender_air_bottle"), "EnderAirBottle", 2);
@@ -32,8 +31,7 @@ function mana2emc(mana) {
     return mana / Data.get("${mod}:mana_per_emc");
 }
 
-function addMappers(mappers)
-{
+function addMappers(mappers) {
     var ctx = mappers.context();
     var oneManaEmc = mana2emc(1);
 
@@ -42,7 +40,7 @@ function addMappers(mappers)
     Recipe.mapRecipeType("${mod}:elven_trade", function (recipe, output, inputs) {
         var outputs = List.arrayList();
         var outsIS = recipe.getOutputs();
-        for(var i = 0; i < outsIS.size(); ++i)
+        for (var i = 0; i < outsIS.size(); ++i)
             outputs.add(Ingredient.decode(outsIS.get(i)));
         mappers.multiMap(outputs, Ingredient.decode(inputs));
     });
@@ -52,7 +50,7 @@ function addMappers(mappers)
         lst.add(Ingredient.decode(inputs.get(0)));
         lst.add(ctx.forEMC(oneManaEmc * recipe.getManaToConsume()).stack(1));
 
-        if(ItemStack.isInTag(output, "botania:special_flowers")) {
+        if (ItemStack.isInTag(output, "botania:special_flowers")) {
             mappers.pushForcefulMapping();
             mappers.map(output, lst);
             mappers.popForcefulMapping();
@@ -64,7 +62,7 @@ function addMappers(mappers)
         lst.addAll(Ingredient.decode(inputs));
         lst.add(Ingredient.decode(recipe.getReagent()));
 
-        if(ItemStack.isInTag(output, "botania:special_flowers")) {
+        if (ItemStack.isInTag(output, "botania:special_flowers")) {
             mappers.pushForcefulMapping();
             mappers.map(output, lst);
             mappers.popForcefulMapping();

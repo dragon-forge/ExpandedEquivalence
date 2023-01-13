@@ -1,5 +1,5 @@
-#define ${mod} thermal
-#require isModLoaded("${mod}");
+//#define ${mod} thermal
+//#require isModLoaded("${mod}");
 
 function registerEMC(configs) {
     var material = function (id) {

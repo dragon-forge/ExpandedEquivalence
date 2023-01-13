@@ -13,10 +13,21 @@ public class FakeItem
 {
 	static long fakeID = 0L;
 	
-	final NormalizedSimpleStack holder = NSSFake.create(ExpandedEquivalence.MOD_ID + "_fake_n" + Long.toUnsignedString(++fakeID));
+	final NormalizedSimpleStack holder;
 	
 	public FakeItem()
 	{
+		this(NSSFake.create(ExpandedEquivalence.MOD_ID + "_fake_n" + Long.toUnsignedString(++fakeID)));
+	}
+	
+	public FakeItem(NormalizedSimpleStack holder)
+	{
+		this.holder = holder;
+	}
+	
+	public static FakeItem ofExisting(NormalizedSimpleStack nss)
+	{
+		return new FakeItem(nss);
 	}
 	
 	public NormalizedSimpleStack getHolder()
