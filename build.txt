@@ -20,4 +20,4 @@ java=17
 cf_project=295222
 
 # alpha, beta, release
-release_type=beta
+release_type=release
