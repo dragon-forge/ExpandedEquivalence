@@ -2,11 +2,11 @@
 mod_id=expequiv
 archive_name=ExpandedEquivalence
 mod_name=Expanded Equivalence
-mod_version=19.1.0
+mod_version=19.1.1
 
 # Maven Info
 maven_group=org.zeith.expequiv
-hl_version=19.3.45
+hl_version=19.3.51
 
 # MC Info
 mc_version=1.19.2

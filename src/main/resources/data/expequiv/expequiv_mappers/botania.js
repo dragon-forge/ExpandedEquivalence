@@ -3,6 +3,8 @@
 
 //#define getItem( getItem("${mod}",
 
+//#import vazkii.botania.common.item.material.RuneItem;
+
 function setupData() {
     Data.setup("botania:mana_per_emc", 10);
 }
@@ -29,6 +31,10 @@ function registerEMC(configs) {
 
 function mana2emc(mana) {
     return mana / Data.get("${mod}:mana_per_emc");
+}
+
+function isRune(stack) {
+    return getItemFromStack(stack) instanceof RuneItem;
 }
 
 function addMappers(mappers) {
@@ -77,7 +83,11 @@ function addMappers(mappers) {
 
     Recipe.mapRecipeType("${mod}:runic_altar", function (recipe, output, inputs) {
         var lst = List.arrayList();
-        lst.addAll(Ingredient.decode(inputs));
+        for(var i = 0; i < inputs.size(); ++i) {
+            lst.add(ItemStack.toIngredientIf(inputs.get(i), function (st0) {
+                return !isRune(st0);
+            }));
+        }
         lst.add(livingRock);
         lst.add(ctx.forEMC(oneManaEmc * recipe.getManaUsage()).stack(1));
         mappers.map(output, lst);

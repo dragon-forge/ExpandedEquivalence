@@ -4,6 +4,10 @@ function setupData() {
     Data.setup("minecraft:max_blaze_powders_from_rod", 2);
 }
 
+function registerEMC(configs) {
+    configs.addEMC(getItem("wither_skeleton_skull"), "WitherSkeletonSkull", 4096);
+}
+
 function addMappers(mappers) {
     var blazeRod = ItemStack.create(getItem("blaze_rod"));
 

@@ -5,6 +5,7 @@ import net.minecraft.server.ReloadableServerResources;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
@@ -61,6 +62,7 @@ public class ExpansionJS
 		
 		
 		Consumer<String> info = log::info, warn = log::warn, error = log::error;
+		Function<ItemStack, Item> getItemFromStack = ItemStack::getItem;
 		
 		var ingr = new JSIngredients(context);
 		
@@ -75,6 +77,7 @@ public class ExpansionJS
 				.addInstancePointer(context.data(), "Data")
 				.addInstancePointer(getItem, "getItem").addInstancePointer(getItem1, "getItem1")
 				.addInstancePointer(getFluid, "getFluid").addInstancePointer(getFluid1, "getFluid1")
+				.addInstancePointer(getItemFromStack, "getItemFromStack")
 				.addInstancePointer(info, "info")
 				.addInstancePointer(warn, "warn")
 				.addInstancePointer(error, "error")

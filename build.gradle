@@ -226,6 +226,7 @@ curseforge {
 
             optionalDependency 'Applied-Energistics-2'
             optionalDependency 'Botania'
+            optionalDependency 'Botanic-Additions'
             optionalDependency 'Extended-Crafting'
             optionalDependency 'Farmers-Delight'
             optionalDependency 'IC2-Classic'
@@ -234,7 +235,7 @@ curseforge {
             optionalDependency 'Mystical-Agriculture'
             optionalDependency 'Thermal-Expansion'
             optionalDependency 'Thermal-Foundation'
-            
+
 //          optionalDependency 'Actually-Additions'
 //          optionalDependency 'Astral-Sorcery'
 //          optionalDependency 'Avaritia-1-10'
