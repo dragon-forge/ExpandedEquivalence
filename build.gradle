@@ -226,9 +226,11 @@ curseforge {
             requiredDependency 'Hammer-Lib'
             requiredDependency 'ProjectE'
 
+            optionalDependency 'Additional-Enchanted-Miner'
             optionalDependency 'Applied-Energistics-2'
             optionalDependency 'Botania'
             optionalDependency 'Botanic-Additions'
+            optionalDependency 'Create'
             optionalDependency 'Extended-Crafting'
             optionalDependency 'Farmers-Delight'
             optionalDependency 'IC2-Classic'
