@@ -6,6 +6,8 @@ function setupData() {
 
 function registerEMC(configs) {
     configs.addEMC(getItem("wither_skeleton_skull"), "WitherSkeletonSkull", 4096);
+    configs.addEMC(getItem("dragon_head"), "DragonHead", 1024);
+    configs.addEMC(getItem("experience_bottle"), "BottleO'Enchanting", 384);
 }
 
 function addMappers(mappers) {

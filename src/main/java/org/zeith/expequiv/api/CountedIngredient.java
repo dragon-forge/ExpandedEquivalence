@@ -144,6 +144,8 @@ public class CountedIngredient
 		if(x instanceof Ingredient i)
 		{
 			if(i.isEmpty()) return null;
+			var stacks = i.getItems();
+			if(stacks.length == 1) return create(ctx, stacks[0]);
 			return FakeItem.create(ctx, i, 1);
 		}
 		

@@ -1,5 +1,7 @@
 package org.zeith.expequiv.js.wrappers;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -40,6 +42,12 @@ public class JSIngredients
 				.map(this::decode)
 				.filter(Objects::nonNull)
 				.toList();
+	}
+	
+	public CountedIngredient tag(String tag)
+	{
+		if(tag.startsWith("#")) tag = tag.substring(1);
+		return CountedIngredient.create(ItemTags.create(new ResourceLocation(tag)), 1);
 	}
 	
 	public CountedIngredient forgeEnergy(long fe)
