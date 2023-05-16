@@ -84,7 +84,7 @@ public class ExpandedEquivalence
 		return (base) ->
 		{
 			if(req.isInstance(base))
-				return (T) base;
+				return req.cast(base);
 			return wrap.apply(base);
 		};
 	}
